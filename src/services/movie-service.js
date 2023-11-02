@@ -14,4 +14,11 @@ getNewestMovies:()=>{
         limit:5,
     });
 },
+getRecomendedMovies: ()=>{
+    return Movies.findAll({
+        where:{
+            rating:{[Sequelize.Op.gte]:8}
+        }
+    });
+},
 };

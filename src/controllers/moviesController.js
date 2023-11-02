@@ -1,4 +1,3 @@
-const movies = require("../database/models/movies");
 const movieService= require("../services/movie-service");
 
 module.exports={
@@ -8,13 +7,18 @@ module.exports={
         });
       },
     detail: (req,res)=>{
-     movieService.getMovieDetail(req.params.id).then((movies)=>{
-       res.render("moviesDetail",{movies});
+     movieService.getMovieDetail(req.params.id).then((movie)=>{
+       res.render("moviesDetail",{movie});
      });
       },
       new: (req,res)=>{
         movieService.getNewestMovies().then((movies)=>{
           res.render("newestMovies",{movies});
+        });
+      },
+      recomended: (req,res)=>{
+        movieService.getRecomendedMovies().then((movies)=>{
+          res.render("recommendedMovies",{movies});
         });
       },
     };
