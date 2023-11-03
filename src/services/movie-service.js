@@ -21,4 +21,37 @@ getRecomendedMovies: ()=>{
         }
     });
 },
-};
+createMovie:(body)=>{
+    return Movies.create({
+        title: req.body.title,
+        rating: req.body.rating,
+        awards: req.body.awards,
+        release_date: req.body.awards,
+        lenght:req.body.length,
+        genre_id: req.body.genre_id,
+
+    });
+},
+updateMovie: (id,body)=>{
+    return Movies.update(
+        { 
+            title: req.body.title,
+            rating: req.body.rating,
+            awards: req.body.awards,
+            release_date: req.body.awards,
+            lenght:req.body.length,
+            genre_id: req.body.genre_id,
+
+        },
+        
+        {
+            where:{id:id},
+          }
+    );
+    },
+    moviesDelete:(id)=>{
+        return Movies.destroy({
+            where:{id:id},
+        });
+      },
+    };
