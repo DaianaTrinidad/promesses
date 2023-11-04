@@ -1,12 +1,10 @@
 const {Movies}= require("../database/models");
 const Sequelize= require("sequelize");
+const dayjs= require("dayjs");
 
 module.exports={
 getAllMovies: ()=>{
     return Movies.findAll();
-},
-getMovieDetail: (id) =>{
-   return Movies.findByPk(id);
 },
 getNewestMovies:()=>{
     return Movies.findAll({
@@ -21,26 +19,41 @@ getRecomendedMovies: ()=>{
         }
     });
 },
+getMovieDetail: (id) => {
+    return Movies.findByPk(id,{
+        include:["genre"],
+    }).then((movie) => {
+    console.log(movie);
+    return{
+      id: movie.id,
+      title: movie.title,
+      rating: movie.rating,
+      awards: movie.awards,
+      release_date: dayjs(movie.release_date).format("YYYY-MM-DD"),
+      genreName: movie.genre?.name??"Sin género",
+      length: movie.length,
+}});
+},
 createMovie:(body)=>{
     return Movies.create({
-        title: req.body.title,
-        rating: req.body.rating,
-        awards: req.body.awards,
-        release_date: req.body.awards,
-        lenght:req.body.length,
-        genre_id: req.body.genre_id,
+        title: body.title,
+        rating: body.rating,
+        awards: body.awards,
+        release_date: body.awards,
+        lenght:body.length,
+        genre_id: body.genre_id,
 
     });
 },
 updateMovie: (id,body)=>{
     return Movies.update(
         { 
-            title: req.body.title,
-            rating: req.body.rating,
-            awards: req.body.awards,
-            release_date: req.body.awards,
-            lenght:req.body.length,
-            genre_id: req.body.genre_id,
+            title: body.title,
+            rating: body.rating,
+            awards: body.awards,
+            release_date: body.awards,
+            lenght:body.length,
+            genre_id:body.genre_id,
 
         },
         

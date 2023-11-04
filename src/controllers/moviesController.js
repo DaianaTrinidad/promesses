@@ -6,11 +6,6 @@ module.exports={
           res.render("moviesList", { movies });
         });
       },
-    detail: (req,res)=>{
-     movieService.getMovieDetail(req.params.id).then((movie)=>{
-       res.render("moviesDetail",{movie});
-     });
-      },
       new: (req,res)=>{
         movieService.getNewestMovies().then((movies)=>{
           res.render("newestMovies",{movies});
@@ -20,6 +15,11 @@ module.exports={
         movieService.getRecomendedMovies().then((movies)=>{
           res.render("recommendedMovies",{movies});
         });
+      },
+    detail: (req,res)=>{
+     movieService.getMovieDetail(req.params.id).then((movie)=>{
+       res.render("moviesDetail",{movie});
+     });
       },
       add: (req,res)=>{
           res.render("moviesAdd");
@@ -31,12 +31,13 @@ module.exports={
         });
       },
       edit:(req,res)=>{
+      console.log("req.params", req.params);
       movieService.getMovieDetail(req.params.id).then((movie)=>{
         res.render("moviesEdit", {movie})
       });
       },
       update: (req,res)=>{
-        movieService.update(req.params.id,req.body).then((movie)=>{
+        movieService.updateMovie(req.params.id,req.body).then((movie)=>{
           res.redirect("/movies/detail/" + req.params.id);
         });
       },
@@ -47,7 +48,7 @@ module.exports={
       });
     },
       delete: (req,res)=>{
-        movieService.moviesDelete(req.params.id).then(()=>{
+        movieService.deleteMovie(req.params.id).then(()=>{
         res.redirect("/movies");
         });
       },

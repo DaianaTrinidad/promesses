@@ -15,5 +15,12 @@ module.exports=(sequelize,DataTypes)=>{
         updatedAt: "updated_at",
     }
     );
+
+    Model.associate=(db)=>{
+    Model.belongsTo(db.Genres,{
+        as:"genre",
+        foreignKey:"genre_id",
+    });
+};
     return Model;
 };
