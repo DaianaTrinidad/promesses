@@ -7,4 +7,9 @@ module.exports={
            res.render("actorsList", {actors})
        });
     },
+    detail:(req,res)=>{
+        actorService.getActor(req.params.id).then((actor)=>{
+            res.render("actorsDetail",{actor})
+        });
+    },
 };

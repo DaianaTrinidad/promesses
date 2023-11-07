@@ -3,7 +3,10 @@ const genreService = require("../services/genre-service");
 module.exports={
     list:(req,res)=>{
         genreService.getAllGenres().then((genres)=>{
-            res.render("genresList",{genres})
+            res.json(
+                genres
+            )
+            //res.render("genresList",{genres});
         });
     },
     detail: (req,res)=>{
