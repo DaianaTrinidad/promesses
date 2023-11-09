@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
       "Genres",
       {
         name: DataTypes.STRING,
-        rating: DataTypes.INTEGER,
+        ranking: DataTypes.INTEGER,
         active: DataTypes.INTEGER,
       },
       {
