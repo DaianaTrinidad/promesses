@@ -1,4 +1,4 @@
-const { Movies } = require("../database/models");
+const { Movies, } = require("../database/models");
 const Sequelize = require("sequelize");
 
 module.exports={
@@ -53,9 +53,9 @@ updateMovie: (id, body) => {
       }
     );
 },
-    deleteMovie: (id) => {
-        return Movies.destroy({
-          where: { id: id },
-        });
-      },
-    };
+deleteMovie: (id) => {
+    return Movies.destroy({
+      where: { id: id },
+    });
+  },
+};
