@@ -1,6 +1,7 @@
 const movies = require("../database/models/movies");
 const movieService= require("../services/movie-service");
 
+
 module.exports={
     list:(req,res)=>{
         movieService.getAllMovies().then((movies)=>{
@@ -19,6 +20,7 @@ module.exports={
     },
     detail:(req,res)=>{
         movieService.getMovieDetail(req.params.id).then((movie)=>{
+          console.log("movie",movie);
         res.render("moviesDetail",{movie});
         });
     },
