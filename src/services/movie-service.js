@@ -39,7 +39,18 @@ module.exports={
             length: movie.length,
           };
         });
-      },
+        },
+        search: async (query) => {
+          const movie = await Movies.findOne({
+            where: {
+              title: {
+                [Sequelize.Op.like]: "%" + query + "%",
+              },
+            },
+            include: ["genre", "actors"],
+          });
+          return movie;
+        },
     createMovie:(body)=>{
         return Movies.create({
             title: body.title,
@@ -92,3 +103,4 @@ deleteMovie: (id) => {
     });
   },
 };
+  

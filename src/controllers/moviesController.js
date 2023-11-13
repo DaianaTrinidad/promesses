@@ -1,6 +1,9 @@
-const movies = require("../database/models/movies");
-const movieService= require("../services/movie-service");
 
+const movieService = require("../services/movie-service");
+const genreService= require("../services/genre-service");
+const omdbApiService = require("../services/omdb-api-service");
+const restCountriesService = require("../services/countries-api-service");
+const countriesApiService = require("../services/countries-api-service");
 
 module.exports={
     list:(req,res)=>{
@@ -24,6 +27,33 @@ module.exports={
         res.render("moviesDetail",{movie});
         });
     },
+    search: async (req, res) => {
+      //1. Buscar la película en nuestra base de datos
+      //1b. si está, mostramos el detalle de la película
+      //2. Buscar la película en la API de OMDB
+      //2b. Si está,  mostramos el detalle de la película con los datos de OMDB
+      //3. Mostramos mensaje de error 404 not found
+      const query = req.query.search;
+      const movieInOurDB = await movieService.search(query);
+      if (movieInOurDB) {
+        return res.render("moviesDetail", { movie: movieInOurDB });
+      }
+  
+      const movieInApi = await omdbApiService.search(query);
+      if (movieInApi) {
+        const movieDetail = await omdbApiService.findMovie(movieInApi.imdbID);
+        const countryName = movieDetail.Country;
+        const countryFlag = await countriesApiService.getCountryFlag(countryName);
+        return res.render("moviesOMDBDetail", {
+          movie: movieInApi,
+          plot: movieDetail.Plot,
+          countryFlag,
+        });
+      }
+  
+      res.send("404");
+    },
+  
     add : (req,res)=>{
         res.render("moviesAdd");
     },
